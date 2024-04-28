@@ -97,8 +97,8 @@ const Fish = ({ image }) => {
         position: "absolute",
         left: state.x,
         top: state.y,
-        height: 60,
-        width: 90,
+        height: 50,
+        width: 80,
         transform: [
           { scaleX: state.xDirection === "right" ? 1 : -1 },
           { scaleY: 2 - state.z / Constant.min_z },

@@ -51,10 +51,10 @@ const FishTrash = ({ image, rodY, rodX, setIndex, deltaY }) => {
     // console.log(state.y);
     console;
     if (
-      rodY + 100 < state.y + 20 &&
-      rodY + 100 > state.y - 20 &&
-      rodX + 70 < state.x + 20 &&
-      rodX + 70 > state.x - 20 &&
+      rodY + 100 < state.y + 50 &&
+      rodY + 100 > state.y - 50 &&
+      rodX + 70 < state.x + 50 &&
+      rodX + 70 > state.x - 50 &&
       deltaY > 0
     ) {
       console.log("WON");
@@ -114,7 +114,7 @@ const FishTrash = ({ image, rodY, rodX, setIndex, deltaY }) => {
         left: state.x,
         top: state.y,
         height: 50,
-        width: 70,
+        width: 75,
         transform: [
           { scaleX: state.xDirection === "right" ? 1 : -1 },
           { scaleY: 2 - state.z / Constant.min_z },

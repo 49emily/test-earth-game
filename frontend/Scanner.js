@@ -7,7 +7,7 @@ const fetch = require("node-fetch");
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-export default Scanner = () => {
+export default Scanner = ({ setItems }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [photo, setPhoto] = useState(null);
@@ -30,17 +30,22 @@ export default Scanner = () => {
     if (cameraRef) {
       const options = { base64: true };
       let photo = await cameraRef.takePictureAsync(options);
-      console.log(photo);
+      // console.log(photo);
       setPhoto(photo.base64);
+      setTookPhoto(true);
       const body = { imageBase64: photo.base64 };
-      const response = await fetch("http://localhost:3000/api/v1/peepoo", {
+      const response = await fetch("http://10.10.30.131:3000/api/v1/peepoo", {
         method: "POST",
         body: JSON.stringify(body),
         headers: { "Content-Type": "application/json" },
       });
       console.log(response);
 
-      setTookPhoto(true);
+      const text = await response.json();
+
+      console.log(text);
+      setItems(text);
+
       await sleep(4000);
     }
   };
@@ -48,8 +53,10 @@ export default Scanner = () => {
   return (
     <View style={styles.container}>
       <Camera style={styles.camera} ref={(ref) => setCameraRef(ref)}>
+        <View style={styles.loadingContainer}>
+          {tookPhoto && <ActivityIndicator size="large" animating={true} />}
+        </View>
         <View style={styles.buttonContainer}>
-          {tookPhoto && <ActivityIndicator animating={true} />}
           <TouchableOpacity onPress={takePicture} style={styles.button}>
             <View style={styles.innerCircle} />
           </TouchableOpacity>
@@ -79,6 +86,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     bottom: 20,
     left: "40%",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    bottom: 100,
+    left: "45%",
   },
   preview: {
     flex: 1,

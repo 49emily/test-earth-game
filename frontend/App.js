@@ -12,12 +12,9 @@ import History from "./History";
 
 const AquariumRoute = () => <Aquarium />;
 
-const ScannerRoute = () => <Scanner />;
-
-const HistoryRoute = () => <History />;
-
 export default function App() {
   const [index, setIndex] = useState(0);
+  const [items, setItems] = useState([]);
   const [routes] = useState([
     { key: "aquarium", title: "Aquarium", focusedIcon: "heart", unfocusedIcon: "heart-outline" },
     {
@@ -40,7 +37,8 @@ export default function App() {
     },
   ]);
   const GameRoute = () => <Game setIndex={setIndex} />;
-
+  const ScannerRoute = () => <Scanner setItems={setItems} />;
+  const HistoryRoute = () => <History items={items} />;
   const renderScene = BottomNavigation.SceneMap({
     aquarium: AquariumRoute,
     game: GameRoute,

@@ -166,7 +166,7 @@ const Game = ({ setIndex }) => {
                   rodY={rodY}
                   deltaY={deltaY}
                   rodX={rodX}
-                  image={require("./assets/tiny-small-pixel-fish-aquarium-animated-gif-picture-10.gif")}
+                  image={require("./assets/fish-d.gif")}
                 />
 
                 <FishTrash
@@ -214,15 +214,7 @@ const Game = ({ setIndex }) => {
                   rodY={rodY}
                   deltaY={deltaY}
                   rodX={rodX}
-                  image={require("./assets/water-bottle.png")}
-                />
-
-                <FishTrash
-                  setIndex={setIndex}
-                  rodY={rodY}
-                  deltaY={deltaY}
-                  rodX={rodX}
-                  image={require("./assets/pink-fish.gif")}
+                  image={require("./assets/water-bottle-2.png")}
                 />
 
                 <Animated.View style={boatAndRodStyle}>

@@ -1,5 +1,5 @@
 module.exports = {
-  max_scale_factor: 1,
+  max_scale_factor: 2,
   image_width: 50,
   image_height: 29,
   min_z: -70,

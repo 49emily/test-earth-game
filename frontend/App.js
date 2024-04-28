@@ -6,35 +6,46 @@ import { PaperProvider } from "react-native-paper";
 import { Text, BottomNavigation } from "react-native-paper";
 import Aquarium from "./Aquarium";
 import Home from "./Home";
-import Game from "./Game";
+import Game from "./Game2";
+import Scanner from "./Scanner";
+import History from "./History";
 
-const MusicRoute = () => <Aquarium />;
+const AquariumRoute = () => <Aquarium />;
 
-const AlbumsRoute = () => <Game />;
+const ScannerRoute = () => <Scanner />;
 
-const RecentsRoute = () => <Text>Recents</Text>;
-
-const NotificationsRoute = () => <Text>Notifications</Text>;
+const HistoryRoute = () => <History />;
 
 export default function App() {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: "music", title: "Favorites", focusedIcon: "heart", unfocusedIcon: "heart-outline" },
-    { key: "albums", title: "Albums", focusedIcon: "album" },
-    { key: "recents", title: "Recents", focusedIcon: "history" },
+    { key: "aquarium", title: "Aquarium", focusedIcon: "heart", unfocusedIcon: "heart-outline" },
     {
-      key: "notifications",
-      title: "Notifications",
-      focusedIcon: "bell",
-      unfocusedIcon: "bell-outline",
+      key: "game",
+      title: "Game",
+      unfocusedIcon: "gamepad-variant-outline",
+      focusedIcon: "gamepad-variant",
+    },
+    {
+      key: "scanner",
+      title: "Scan",
+      unfocusedIcon: "camera-enhance-outline",
+      focusedIcon: "camera-enhance",
+    },
+    {
+      key: "history",
+      title: "History",
+      focusedIcon: "clipboard-text-clock",
+      unfocusedIcon: "clipboard-text-clock-outline",
     },
   ]);
+  const GameRoute = () => <Game setIndex={setIndex} />;
 
   const renderScene = BottomNavigation.SceneMap({
-    music: MusicRoute,
-    albums: AlbumsRoute,
-    recents: RecentsRoute,
-    notifications: NotificationsRoute,
+    aquarium: AquariumRoute,
+    game: GameRoute,
+    scanner: ScannerRoute,
+    history: HistoryRoute,
   });
 
   return (

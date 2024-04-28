@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Image, Dimensions } from "react-native";
+import { Modal, Portal, Text, PaperProvider } from "react-native-paper";
 import Constant from "./constants";
 
-const Fish = ({ image }) => {
+const FishTrash = ({ image, rodY, rodX, setIndex, deltaY }) => {
   const [state, setState] = useState({
     x: Math.random() * (Dimensions.get("window").width - Constant.image_width),
-    y: Math.random() * (Dimensions.get("window").height - Constant.image_height - 200),
+    y: 200 + Math.random() * (Dimensions.get("window").height - 400 - Constant.image_height),
     z: Math.random() * Constant.min_z,
-    xVelocity: 2,
+    xVelocity: 4,
     yVelocity: 1,
     zVelocity: 0.1,
     xDirection: "right",
@@ -15,12 +16,14 @@ const Fish = ({ image }) => {
     zDirection: "in",
   });
 
+  const [visible, setVisible] = useState(false); // State for modal visibility
+
   useEffect(() => {
     const tick = () => {
       move();
-      if (Math.random() < Constant.chance_to_change_direction) {
-        chooseRandomMovement();
-      }
+      // if (Math.random() < Constant.chance_to_change_direction) {
+      //   chooseRandomMovement();
+      // }
     };
 
     const intervalId = setInterval(tick, Constant.tick_interval);
@@ -30,7 +33,7 @@ const Fish = ({ image }) => {
   const chooseRandomMovement = () => {
     setState((prevState) => ({
       ...prevState,
-      xVelocity: Math.random() * Constant.max_x_velocity,
+      xVelocity: Math.random() * Constant.max_x_velocity + 3,
       yVelocity: Math.random() * Constant.max_y_velocity,
       zVelocity: Math.random() * Constant.max_z_velocity,
       xDirection: Math.random() < 0.5 ? "left" : "right",
@@ -40,6 +43,25 @@ const Fish = ({ image }) => {
   };
 
   const move = () => {
+    // console.log("rod");
+    // console.log(rodX);
+    // // console.log(rodY);
+    // console.log("fish");
+    // console.log(state.x);
+    // console.log(state.y);
+    console;
+    if (
+      rodY + 100 < state.y + 20 &&
+      rodY + 100 > state.y - 20 &&
+      rodX + 70 < state.x + 20 &&
+      rodX + 70 > state.x - 20 &&
+      deltaY > 0
+    ) {
+      console.log("WON");
+      setVisible(true); // Show the modal when the player wins
+      setIndex(0);
+      return;
+    }
     setState((prevState) => {
       let newX =
         prevState.x +
@@ -54,21 +76,15 @@ const Fish = ({ image }) => {
       let newYDirection = prevState.yDirection;
       let newZDirection = prevState.zDirection;
 
-      if (
-        newX >
-        Dimensions.get("window").width - Constant.max_scale_factor * Constant.image_width
-      ) {
+      if (newX > Dimensions.get("window").width - Constant.image_width) {
         newXDirection = "left";
       } else if (newX < Constant.max_scale_factor * Constant.image_width) {
         newXDirection = "right";
       }
 
-      if (
-        newY >
-        Dimensions.get("window").height - 200 - Constant.max_scale_factor * Constant.image_height
-      ) {
+      if (newY > Dimensions.get("window").height - Constant.image_height - 200) {
         newYDirection = "up";
-      } else if (newY < Constant.max_scale_factor * Constant.image_height) {
+      } else if (newY < 200 + Constant.max_scale_factor * Constant.image_height) {
         newYDirection = "down";
       }
 
@@ -97,16 +113,15 @@ const Fish = ({ image }) => {
         position: "absolute",
         left: state.x,
         top: state.y,
-        height: 60,
-        width: 90,
+        height: 50,
+        width: 70,
         transform: [
           { scaleX: state.xDirection === "right" ? 1 : -1 },
           { scaleY: 2 - state.z / Constant.min_z },
         ],
-        // zIndex: Math.round(state.z),
       }}
     />
   );
 };
 
-export default Fish;
+export default FishTrash;
